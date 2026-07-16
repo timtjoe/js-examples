@@ -1,0 +1,3 @@
+import()
+.mjs
+import.meta.url
