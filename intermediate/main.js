@@ -1,10 +1,13 @@
-async function main() {
-    const lines = require('fs').readFileSync(0, 'utf-8').trim().split('\n');
-    const promises = lines.map(line => Promise.resolve(Number(line)));
-    // Use Promise.all and sum.
-    const nums = await Promise.all(promises);
-    const sum = nums.reduce((acc, cur) => acc + cur, 0);
-    console.log(sum)
+function greet() {
+    return 'Hi, ' + this.name;
 }
 
-main();
+const name = require('fs').readFileSync(0, 'utf-8').trim();
+// Build an object { name } and call greet so this points to it.
+// Then print the result.
+const user = {name}
+console.log(greet.call(user))
+
+
+
+
