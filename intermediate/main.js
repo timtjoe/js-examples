@@ -1,15 +1,25 @@
-function safeDivide(a, b) {
-    if (b === 0) throw new Error("divide by zero");
-    return Math.floor(a / b);
-    // throw if b === 0; else return Math.floor(a / b)
+class AgeError extends Error {
+    // constructor(age) -> set name, age, and call super with a message
+    constructor(age) {
+        super(`Invalid age: ${age}`);
+        this.name = "AgeError";
+        this.age = age;
+    }
 }
 
-const lines = require('fs').readFileSync(0, 'utf-8').trim().split('\n');
-const a = Number(lines[0]);
-const b = Number(lines[1]);
+function validateAge(n) {
+    // Throw AgeError for n < 0 or n > 150; else return n.
+    if (n < 0 || n > 150) {
+        throw new AgeError(n);
+    } else {
+        return n;
+    }
+}
 
+const n = Number(require('fs').readFileSync(0, 'utf-8').trim());
 try {
-    console.log('RESULT', safeDivide(a, b));
+    console.log('OK', validateAge(n));
 } catch (err) {
-    console.log('ERROR', err.message);
+    if (err instanceof AgeError) console.log('ERROR', err.age);
+    else throw err;
 }
