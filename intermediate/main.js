@@ -1,23 +1,21 @@
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin });
-
-rl.on("line", (line) => {
-    // Split into words, handle empty input
-    const words = line.trim() === '' ? [] : line.split(' ');
-
-    // Count occurrences using a Map
-    const counts = new Map();
-    for (const w of words) {
-        counts.set(w, (counts.get(w) ?? 0) + 1);
+class Person {
+    constructor(first, last) {
+        this._first = first;
+        this._last = last;
     }
 
-    // Sort alphabetically by word
-    const sorted = [...counts.entries()].sort(([a], [b]) => a.localeCompare(b));
+    get firstName() { return this._first }
+    set firstName(v) { this._first = v }
 
-    // Print each word and its count
-    for (const [w, c] of sorted) {
-        console.log(`${w}: ${c}`);
-    }
-    rl.close();
-});
-rl.on("close", () => process.exit(0));
+    get lastName() { return this._last }
+    set lastName(v) { this._last = v }
+
+    get fullName() { return `${this._first} ${this._last}`; }
+    set fullName(v) { [this._first, this._last] = v.split(" ") }
+}
+
+const p = new Person("Ada", "Lovelace");
+console.log(p.fullName);
+p.fullName = "Linus Torvalds";
+console.log(p.firstName);
+console.log(p.lastName);
