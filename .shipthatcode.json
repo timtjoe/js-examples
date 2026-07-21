@@ -1,7 +1,7 @@
 {
-  "course": "javascript-intermediate",
+  "course": "javascript-advanced",
   "language": "javascript",
   "language_id": 63,
-  "entrypoint": "intermediate/main.js",
+  "entrypoint": "main.js",
   "version": 1
 }
