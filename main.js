@@ -1,18 +1,13 @@
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin });
+class Animal { 
+    kind(){ return 'animal'}
+ }
+class Dog extends Animal { 
+    kind() {return 'dog'}
+ }
+class Puppy extends Dog { }
 
-function* squares() {
-    let i = 1;
-    while (true) {
-        yield i * i;
-        i++
-    }
-}
-
-rl.on("line", (line) => {
-    const n = parseInt(line);
-    const gen = squares();
-    for (let i = 0; i < n; i++) console.log(gen.next().value);
-    rl.close();
-});
-rl.on("close", () => process.exit(0));
+const p = new Puppy();
+console.log(p.kind());
+console.log(p.__proto__.constructor.name);
+console.log(p.__proto__.__proto__.constructor.name);
+console.log(p.__proto__.__proto__.__proto__.constructor.name);
