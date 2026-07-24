@@ -1,29 +1,22 @@
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin });
-const lines = [];
+function memoize(fn) {
+    const cache = new WeakMap();
+    return function (obj) {
+        // if cache has obj, return cache.get(obj)
+        if (cache.has(obj)) {
+            return cache.get(obj);
+        };
+        // else compute, store, return
+        const result = fn(obj);
+        cache.set(obj, result)
+        return result;
+    };
+}
 
-const obj = {};
-const proxy = new Proxy(obj, {
-    get(obj, prop, receiver) {
-        return Reflect.get(obj, prop, receiver)
-    },
-    set(obj, prop, value) {
-        console.log(`set ${prop}=${value}`);
-        obj[prop] = value;
-        return true;
-    }
-});
+function expensive(obj) {
+    return obj.x * 2;
+}
 
-rl.on("line", (line) => {
-    lines.push(line);
-    if (lines.length === 3) {
-        for (const l of lines) {
-            const [k, v] = l.split('=');
-            proxy[k] = v;
-        }
-        const lastKey = lines[2].split('=')[0];
-        console.log(proxy[lastKey]);
-        rl.close();
-    }
-});
-rl.on("close", () => process.exit(0));
+const memo = memoize(expensive);
+const input = { x: 5 };
+console.log(memo(input));
+console.log(memo(input));
